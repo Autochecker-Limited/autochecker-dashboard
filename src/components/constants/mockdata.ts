@@ -1,6 +1,12 @@
 
 // --- Mock data --------------------------------------------------------------
-export const mockSmallCards = [
+// components/constants/mockSmallCards.ts
+export type SmallCard = {
+    label: string;
+    value: string | number;
+};
+
+export const mockSmallCards: SmallCard[] = [
     { label: "Stolen Reports (Today)", value: 12 },
     { label: "Stolen Reports (Week)", value: 75 },
     { label: "VIN/Plate Checks", value: 250 },
