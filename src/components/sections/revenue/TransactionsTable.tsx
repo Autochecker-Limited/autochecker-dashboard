@@ -26,6 +26,16 @@ function toIso(d: Date) {
     return `${y}-${m}-${day}`;
 }
 
+// 🔒 Strongly-type the quick-range keys so no `any` cast is needed
+type QuickKey = "this-year" | "30d" | "90d" | "this-month" | "all";
+const QUICK_OPTIONS: ReadonlyArray<{ k: QuickKey; label: string }> = [
+    { k: "this-year", label: "This Year" },
+    { k: "30d", label: "Last 30d" },
+    { k: "90d", label: "Last 90d" },
+    { k: "this-month", label: "This Month" },
+    { k: "all", label: "All" },
+];
+
 export default function TransactionsTable({ data, onRangeChange }: Props) {
     // ----- Timeframe controls (default: this year) -----
     const today = React.useMemo(() => new Date(), []);
@@ -34,13 +44,13 @@ export default function TransactionsTable({ data, onRangeChange }: Props) {
     const [start, setStart] = React.useState<string>(toIso(jan1));
     const [end, setEnd] = React.useState<string>(toIso(today));
 
-    // 🔧 Notify parent ONLY when start/end change (do not depend on onRangeChange identity)
+    // Notify parent ONLY when start/end change (don’t depend on handler identity)
     React.useEffect(() => {
         if (onRangeChange) onRangeChange({ start, end });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [start, end]);
 
-    const quick = (label: "this-year" | "30d" | "90d" | "this-month" | "all") => {
+    const quick = (label: QuickKey) => {
         const to = new Date(end);
         let from = new Date(to);
         if (label === "this-year") from = new Date(to.getFullYear(), 0, 1);
@@ -76,18 +86,15 @@ export default function TransactionsTable({ data, onRangeChange }: Props) {
                 <div className="flex flex-wrap items-center gap-2">
                     {/* Quick ranges */}
                     <div className="inline-flex overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
-                        {[
-                            { k: "this-year", label: "This Year" },
-                            { k: "30d", label: "Last 30d" },
-                            { k: "90d", label: "Last 90d" },
-                            { k: "this-month", label: "This Month" },
-                            { k: "all", label: "All" },
-                        ].map(({ k, label }) => (
+                        {QUICK_OPTIONS.map(({ k, label }, idx) => (
                             <button
                                 key={k}
-                                onClick={() => quick(k as any)}
-                                className="px-2 py-1 text-xs border-r last:border-r-0 border-slate-200 hover:bg-slate-50
-                           dark:border-slate-700 dark:hover:bg-slate-800/60"
+                                onClick={() => quick(k)}
+                                className={`px-2 py-1 text-xs hover:bg-slate-50 dark:hover:bg-slate-800/60 ${
+                                    idx < QUICK_OPTIONS.length - 1
+                                        ? "border-r border-slate-200 dark:border-slate-700"
+                                        : ""
+                                }`}
                             >
                                 {label}
                             </button>
@@ -101,8 +108,7 @@ export default function TransactionsTable({ data, onRangeChange }: Props) {
                             type="date"
                             value={start}
                             onChange={(e) => setStart(e.target.value)}
-                            className="ml-1 rounded-lg border border-slate-300 bg-white p-1.5 text-xs
-                         dark:border-slate-700 dark:bg-slate-900"
+                            className="ml-1 rounded-lg border border-slate-300 bg-white p-1.5 text-xs dark:border-slate-700 dark:bg-slate-900"
                         />
                     </label>
                     <label className="text-xs text-slate-500 dark:text-slate-400">
@@ -111,8 +117,7 @@ export default function TransactionsTable({ data, onRangeChange }: Props) {
                             type="date"
                             value={end}
                             onChange={(e) => setEnd(e.target.value)}
-                            className="ml-1 rounded-lg border border-slate-300 bg-white p-1.5 text-xs
-                         dark:border-slate-700 dark:bg-slate-900"
+                            className="ml-1 rounded-lg border border-slate-300 bg-white p-1.5 text-xs dark:border-slate-700 dark:bg-slate-900"
                         />
                     </label>
 
