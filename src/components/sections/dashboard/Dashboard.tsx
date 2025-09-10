@@ -81,8 +81,8 @@ export function Dashboard() {
                 {/* LEFT */}
                 <div className="space-y-6 md:space-y-8 xl:col-span-2">
                     {/* Top summary cards */}
-                    <div className="grid grid-cols-1 gap-4 md:gap-5 xl:gap-6 md:grid-cols-2 xl:grid-cols-4">
-                        {summaryCards.map((c) => {
+                    <div className="grid grid-cols-1 gap-4 md:gap-5 xl:gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    {summaryCards.map((c) => {
                             const isRevenue = c.label === "Total Revenue";
 
                             // Build a spacious footer for desktop & mobile

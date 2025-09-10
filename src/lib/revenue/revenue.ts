@@ -15,27 +15,37 @@ export type Campaign = {
     earnings: number;
 };
 
-// Existing deterministic formatter (example)
+// KSh formatter (keeps your fmtUSD name for minimal refactors)
 export const fmtUSD = (n: number) =>
-    n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
+    `Ksh ${n.toLocaleString("en-KE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}`;
 
-// Sum all-time (you already have something similar)
+// ----- All-time totals -------------------------------------------------------
 export function computeRevenueTotals(transactions: Tx[], campaigns: Campaign[]) {
     const mpesaTotal = transactions
-        .filter(t => t.status === "Completed" && t.type === "M-Pesa")
+        .filter((t) => t.status === "Completed" && t.type === "M-Pesa")
         .reduce((a, b) => a + b.amount, 0);
+
     const stripeTotal = transactions
-        .filter(t => t.status === "Completed" && t.type === "Stripe")
+        .filter((t) => t.status === "Completed" && t.type === "Stripe")
         .reduce((a, b) => a + b.amount, 0);
+
     const adsTotal = campaigns.reduce((a, b) => a + (b.earnings || 0), 0);
+
     return { mpesaTotal, stripeTotal, adsTotal, totalRevenue: mpesaTotal + stripeTotal + adsTotal };
 }
 
-/** ---- New range helpers ---- */
+/** ---- Range helpers ------------------------------------------------------ */
 const d = (s: string) => new Date(`${s}T00:00:00`);
 const overlaps = (aStart: Date, aEnd: Date, bStart: Date, bEnd: Date) =>
     aStart <= bEnd && bStart <= aEnd;
 
+/**
+ * Range totals: M-Pesa + Stripe sums by date range; Ads counted if
+ * a campaign overlaps the selected window (no proration).
+ */
 export function computeRevenueForRange(
     transactions: Tx[],
     campaigns: Campaign[],
@@ -46,24 +56,24 @@ export function computeRevenueForRange(
     const end = d(endISO);
 
     const mpesa = transactions
-        .filter(t => t.status === "Completed" && t.type === "M-Pesa")
-        .filter(t => {
+        .filter((t) => t.status === "Completed" && t.type === "M-Pesa")
+        .filter((t) => {
             const td = d(t.date);
             return td >= start && td <= end;
         })
         .reduce((a, b) => a + b.amount, 0);
 
     const stripe = transactions
-        .filter(t => t.status === "Completed" && t.type === "Stripe")
-        .filter(t => {
+        .filter((t) => t.status === "Completed" && t.type === "Stripe")
+        .filter((t) => {
             const td = d(t.date);
             return td >= start && td <= end;
         })
         .reduce((a, b) => a + b.amount, 0);
 
-    // Count a campaign if its date range intersects the selected window
+    // Count campaign earnings if any overlap with [start, end]
     const ads = campaigns
-        .filter(c => overlaps(d(c.start), d(c.end), start, end))
+        .filter((c) => overlaps(d(c.start), d(c.end), start, end))
         .reduce((a, b) => a + (b.earnings || 0), 0);
 
     return { mpesa, stripe, ads, total: mpesa + stripe + ads };
@@ -81,8 +91,8 @@ export function monthBounds(yyyymm: string) {
 export function availableMonthsFromData(transactions: Tx[], campaigns: Campaign[]) {
     const set = new Set<string>();
     const add = (iso: string) => set.add(iso.slice(0, 7));
-    transactions.forEach(t => add(t.date));
-    campaigns.forEach(c => add(c.start));
-    campaigns.forEach(c => add(c.end));
+    transactions.forEach((t) => add(t.date));
+    campaigns.forEach((c) => add(c.start));
+    campaigns.forEach((c) => add(c.end));
     return Array.from(set).sort().reverse(); // newest first
 }

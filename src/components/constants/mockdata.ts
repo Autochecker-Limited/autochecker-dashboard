@@ -7,7 +7,6 @@ export type SmallCard = {
 };
 
 export const mockSmallCards: SmallCard[] = [
-    { label: "Total Revenue", value: "$1,500" },
     { label: "Stolen Reports (Today)", value: 12 },
     { label: "Stolen Reports (Week)", value: 75 },
     { label: "VIN/Plate Checks", value: 250 },

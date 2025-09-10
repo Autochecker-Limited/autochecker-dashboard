@@ -14,7 +14,7 @@ export type Summary = {
 
 export const mockSummary: Summary[] = [
     {
-        label: "Case Management",
+        label: "Reported Cases",
         value: 125,
         delta: "+5%",
         icon: FolderOutlinedIcon,
@@ -28,17 +28,17 @@ export const mockSummary: Summary[] = [
         color: "bg-purple-100 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400",
     },
     {
-        label: "Total Revenue",
-        value: "$4,500",
-        delta: "-2%",
-        icon: AttachMoneyOutlinedIcon,
-        color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400",
-    },
-    {
         label: "Broadcasts",
         value: 150,
         delta: "+8%",
         icon: CampaignOutlinedIcon,
         color: "bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400",
+    },
+    {
+        label: "Total Revenue",
+        value: "Ksh 4,500",
+        delta: "-2%",
+        icon: AttachMoneyOutlinedIcon,
+        color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400",
     },
 ];
