@@ -5,19 +5,40 @@ import {
     Typography,
     Stack,
 } from "@mui/material";
+import { Space_Grotesk } from "next/font/google";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 
+
+const spaceGroteskBold = Space_Grotesk({ subsets: ["latin"], weight: "700" });
+
 export default function ActionsCard() {
     return (
-        <Card variant="outlined" sx={{ borderRadius: 3, boxShadow: 2 }}>
+        <Card
+            variant="outlined"
+            sx={{
+                borderRadius: 3,
+                boxShadow: 0,                     // lighter in dark mode
+                borderColor: 'divider',
+                bgcolor: 'white',                 // light mode
+                '.dark &': {
+                    bgcolor: '#0f172a',            // tailwind slate-900
+                    borderColor: '#1f2937',        // tailwind slate-700
+                },
+            }}
+        >
             <CardContent>
                 <Typography
                     variant="subtitle1"
-                    sx={{ mb: 2, fontWeight: "bold" }}
-                    color="text.primary"
+                    className={spaceGroteskBold.className}
+                    sx={{
+                        mb: 2,
+                        fontWeight: 700,           // ensure bold
+                        color: "text.primary",     // light mode from theme
+                        ".dark &": { color: "#fff" } // Tailwind dark mode → white
+                    }}
                 >
                     Actions
                 </Typography>
@@ -28,7 +49,7 @@ export default function ActionsCard() {
                         fullWidth
                         variant="contained"
                         color="success"
-                        startIcon={<CampaignOutlinedIcon />}
+                        startIcon={<CampaignOutlinedIcon/>}
                         onClick={() => alert("Broadcast Approved ✅")}
                         sx={{
                             borderRadius: 2,
@@ -44,9 +65,9 @@ export default function ActionsCard() {
                         fullWidth
                         variant="outlined"
                         color="primary"
-                        startIcon={<PersonAddAltOutlinedIcon />}
+                        startIcon={<PersonAddAltOutlinedIcon/>}
                         onClick={() => alert("Assigned 👤")}
-                        sx={{ borderRadius: 2, textTransform: "none" }}
+                        sx={{borderRadius: 2, textTransform: "none"}}
                     >
                         Assign to Team Member
                     </Button>
@@ -56,9 +77,9 @@ export default function ActionsCard() {
                         fullWidth
                         variant="outlined"
                         color="warning"
-                        startIcon={<FlagOutlinedIcon />}
+                        startIcon={<FlagOutlinedIcon/>}
                         onClick={() => alert("Flagged 🚩")}
-                        sx={{ borderRadius: 2, textTransform: "none" }}
+                        sx={{borderRadius: 2, textTransform: "none"}}
                     >
                         Flag for Manual Review
                     </Button>
@@ -68,9 +89,9 @@ export default function ActionsCard() {
                         fullWidth
                         variant="outlined"
                         color="error"
-                        startIcon={<ContentCopyOutlinedIcon />}
+                        startIcon={<ContentCopyOutlinedIcon/>}
                         onClick={() => alert("Marked as Duplicate 🗂️")}
-                        sx={{ borderRadius: 2, textTransform: "none" }}
+                        sx={{borderRadius: 2, textTransform: "none"}}
                     >
                         Mark as Duplicate
                     </Button>
