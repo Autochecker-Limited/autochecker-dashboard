@@ -7,22 +7,14 @@ export type SmallCard = {
 };
 
 export const mockSmallCards: SmallCard[] = [
+    { label: "Total Revenue", value: "$1,500" },
     { label: "Stolen Reports (Today)", value: 12 },
     { label: "Stolen Reports (Week)", value: 75 },
     { label: "VIN/Plate Checks", value: 250 },
     { label: "Broadcasts Sent", value: 5 },
-    { label: "Revenue", value: "$1,500" },
     { label: "API Status", value: "All Systems Operational" },
 ];
 
-
-// export const mockActivity = [
-//     { label: "New Stolen Report", time: "10 minutes ago", icon: "" },
-//     { label: "Successful Payment", time: "25 minutes ago", icon: "💵" },
-//     { label: "Broadcast Sent", time: "1 hour ago", icon: "📡" },
-//     { label: "VIN Check", time: "2 hours ago", icon: "🔎" },
-//     { label: "New Stolen Report", time: "3 hours ago", icon: "🚗" },
-// ];
 
 
 export const mockCases = [

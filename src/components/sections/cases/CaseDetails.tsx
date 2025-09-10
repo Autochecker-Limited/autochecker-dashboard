@@ -1,10 +1,8 @@
-// components/sections/Cases/CaseDetails.tsx
+// components/sections/cases/CaseDetails.tsx
+"use client";
+
 import React, {useEffect, useState} from "react";
-import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import ActionsCard from "@/components/sections/Cases/ActionsCard";
+import ActionsCard from "@/components/sections/cases/ActionsCard";
 
 type CrossCheck = { name: string; match: boolean };
 type Reporter = { name: string; phone: string; email: string };

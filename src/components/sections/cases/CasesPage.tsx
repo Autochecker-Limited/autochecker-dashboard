@@ -1,7 +1,9 @@
-// components/sections/Cases/CasesPage.tsx
+// components/sections/cases/CasesPage.tsx
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { CasesTable } from "@/components/sections/Cases/CasesTable";
-import CaseDetails from "@/components/sections/Cases/CaseDetails";
+import { CasesTable } from "@/components/sections/cases/CasesTable";
+import CaseDetails from "@/components/sections/cases/CaseDetails";
 import { mockCases } from "@/components/constants";
 import type { Case } from "@/components/constants";
 

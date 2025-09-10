@@ -1,7 +1,7 @@
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
+import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import { SvgIconComponent } from "@mui/icons-material";
 
 export type Summary = {
@@ -9,7 +9,7 @@ export type Summary = {
     value: string | number;
     delta: string;
     icon: SvgIconComponent;
-    color?: string;
+    color: string;
 };
 
 export const mockSummary: Summary[] = [
@@ -28,10 +28,10 @@ export const mockSummary: Summary[] = [
         color: "bg-purple-100 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400",
     },
     {
-        label: "Subscriptions",
+        label: "Total Revenue",
         value: "$4,500",
         delta: "-2%",
-        icon: CreditCardOutlinedIcon,
+        icon: AttachMoneyOutlinedIcon,
         color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400",
     },
     {
