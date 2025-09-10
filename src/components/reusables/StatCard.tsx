@@ -14,6 +14,8 @@ type StatCardProps = {
     onClick?: React.MouseEventHandler<HTMLElement>;
     className?: string;
     density?: "compact" | "cozy" | "roomy";
+    /** NEW: content shown inside the card below the main row */
+    footer?: React.ReactNode;
 };
 
 export function StatCard({
@@ -27,7 +29,8 @@ export function StatCard({
                              locale = "en-US",
                              onClick,
                              className = "",
-                             density = "cozy", // default spacing
+                             density = "cozy",
+                             footer,                      // NEW
                          }: StatCardProps) {
     const nf = React.useMemo(() => new Intl.NumberFormat(locale), [locale]);
     const isNumber = typeof value === "number";
@@ -59,16 +62,11 @@ export function StatCard({
     };
 
     // spacing presets
-    const pad =
-        density === "roomy" ? "p-6" : density === "compact" ? "p-4" : "p-5";
-    const blockSpacing =
-        density === "roomy" ? "space-y-5" : density === "compact" ? "space-y-3" : "space-y-4";
-    const headerGap =
-        density === "roomy" ? "gap-3" : density === "compact" ? "gap-2" : "gap-2.5";
-    const valueSize =
-        density === "roomy" ? "text-2xl" : density === "compact" ? "text-lg" : "text-xl";
+    const pad = density === "roomy" ? "p-6" : density === "compact" ? "p-4" : "p-5";
+    const blockSpacing = density === "roomy" ? "space-y-5" : density === "compact" ? "space-y-3" : "space-y-4";
+    const headerGap = density === "roomy" ? "gap-3" : density === "compact" ? "gap-2" : "gap-2.5";
+    const valueSize = density === "roomy" ? "text-2xl" : density === "compact" ? "text-lg" : "text-xl";
 
-    // If clickable, render as a <button> for a11y
     const Wrapper: keyof JSX.IntrinsicElements = onClick ? "button" : "div";
     const clickableCls = onClick
         ? "transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
@@ -110,7 +108,12 @@ export function StatCard({
                         </div>
                     )}
                 </div>
+
+                {/* NEW: roomy in-card footer if provided */}
+                {footer ? <div className="mt-3">{footer}</div> : null}
             </div>
         </Wrapper>
     );
 }
+
+export default StatCard;

@@ -4,7 +4,7 @@
 import * as React from "react";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import TimeSeriesRevenue from "@/components/sections/revenue/TimeSeriesRevenue";
-import type { Tx, Campaign } from "@/lib/revenue";
+import type { Tx, Campaign } from "@/lib/revenue/revenue";
 
 type Props = {
     open: boolean;

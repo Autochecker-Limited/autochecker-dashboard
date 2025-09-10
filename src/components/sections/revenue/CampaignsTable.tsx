@@ -3,7 +3,7 @@
 import * as React from "react";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import Pager from "./Pager";
-import { fmtUSD, type Campaign } from "@/lib/revenue";
+import { fmtUSD, type Campaign } from "@/lib/revenue/revenue";
 import { exportCampaignsPdf } from "./PdfExport";
 
 type Props = {

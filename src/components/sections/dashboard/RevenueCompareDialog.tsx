@@ -21,10 +21,10 @@ import {
     availableMonthsFromData,
     type Tx,
     type Campaign,
-} from "@/lib/revenue";
+} from "@/lib/revenue/revenue";
 import {
     buildWeeklyCompareDataset,
-} from "@/lib/revenue-weekly";
+} from "@/lib/revenue/revenue-weekly";
 
 type Props = {
     open: boolean;

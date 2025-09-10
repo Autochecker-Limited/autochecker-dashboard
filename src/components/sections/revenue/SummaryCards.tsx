@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { fmtUSD } from "@/lib/revenue";
+import { fmtUSD } from "@/lib/revenue/revenue";
 
 type Props = {
     totalRevenue: number;

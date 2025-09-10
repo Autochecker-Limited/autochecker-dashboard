@@ -3,7 +3,7 @@
 import * as React from "react";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import Pager from "./Pager";
-import { fmtUSD, type Tx } from "@/lib/revenue";
+import { fmtUSD, type Tx } from "@/lib/revenue/revenue";
 import { exportTransactionsPdf } from "./PdfExport";
 
 type TxStatus = "Completed" | "Failed";

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { transactions, campaigns } from "@/components/constants/revenue.mock";
-import { computeRevenueTotals } from "@/lib/revenue";
+import { computeRevenueTotals } from "@/lib/revenue/revenue";
 import SummaryCards from "@/components/sections/revenue/SummaryCards";
 import TransactionsTable from "@/components/sections/revenue/TransactionsTable";
 import CampaignsTable from "@/components/sections/revenue/CampaignsTable";

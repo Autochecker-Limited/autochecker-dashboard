@@ -14,7 +14,7 @@ import {
 } from "recharts";
 import type { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
 
-import { type Tx, type Campaign } from "@/lib/revenue";
+import { type Tx, type Campaign } from "@/lib/revenue/revenue";
 import {
     aggregateSeries,
     buildDailySeries,
@@ -23,7 +23,7 @@ import {
     tooltipValueFormatter,
     type Granularity,
     tinyTickLabel,
-} from "@/lib/time-series-utils";
+} from "@/lib/revenue/time-series-utils";
 
 // Colors (Tailwind palette)
 const EMERALD = "#10b981"; // M-Pesa

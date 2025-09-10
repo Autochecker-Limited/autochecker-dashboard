@@ -1,7 +1,7 @@
-import type { Tx, Campaign } from "@/lib/revenue";
+import type { Tx, Campaign } from "@/lib/revenue/revenue";
 
 export const transactions: Tx[] = [
-    { date: "2025-09-09", amount: 145, type: "Stripe",  status: "Completed" },
+    { date: "2025-09-09", amount: 1450, type: "Stripe",  status: "Completed" },
     { date: "2025-09-08", amount: 320, type: "M-Pesa",  status: "Completed" },
     { date: "2025-09-08", amount:  75, type: "Stripe",  status: "Failed" },
     { date: "2025-09-07", amount: 510, type: "M-Pesa",  status: "Completed" },
@@ -27,7 +27,7 @@ export const campaigns: Campaign[] = [
     { name: "Back-to-School Safety Blitz", start: "2025-08-25", end: "2025-09-05", impressions: 185_400, earnings: 3200 },
     { name: "Labor Day Travel Advisory",   start: "2025-08-28", end: "2025-09-02", impressions:  98_600, earnings: 1400 },
     { name: "Urban Parking Awareness",     start: "2025-09-01", end: "2025-09-10", impressions:  76_200, earnings: 1100 },
-    { name: "Night Patrol Sponsorship",    start: "2025-09-03", end: "2025-09-09", impressions:  45_800, earnings:  600 },
+    { name: "Night Patrol Sponsorship",    start: "2025-09-03", end: "2025-09-09", impressions:  45_800, earnings:  600},
     { name: "VIN Check Promo A",           start: "2025-08-10", end: "2025-08-20", impressions: 120_000, earnings: 1800 },
     { name: "VIN Check Promo B",           start: "2025-08-20", end: "2025-08-31", impressions: 132_500, earnings: 1950 },
     { name: "Neighborhood Watch Week",     start: "2025-08-05", end: "2025-08-12", impressions:  68_350, earnings:  900 },

@@ -1,6 +1,6 @@
 // components/sections/dashboard/revenue-weekly.ts
 
-import type { Tx, Campaign } from "@/lib/revenue";
+import type { Tx, Campaign } from "@/lib/revenue/revenue";
 
 // Time constants
 const DAY_MS = 24 * 60 * 60 * 1000;

@@ -1,5 +1,5 @@
 // components/sections/revenue/time-series-utils.ts
-import { fmtUSD, type Tx, type Campaign } from "@/lib/revenue";
+import { fmtUSD, type Tx, type Campaign } from "@/lib/revenue/revenue";
 
 export type Granularity = "daily" | "weekly" | "monthly";
 
