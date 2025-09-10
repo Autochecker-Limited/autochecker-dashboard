@@ -131,3 +131,17 @@ export function tickLabel(dateISO: string, granularity: Granularity) {
 export function tooltipValueFormatter(value: unknown) {
     return typeof value === "number" ? fmtUSD(value) : String(value);
 }
+
+
+export function tinyTickLabel(dateISO: string, granularity: Granularity) {
+    const d = new Date(`${dateISO}T00:00:00`);
+    const mm = d.getMonth() + 1;
+    const dd = d.getDate();
+
+    if (granularity === "monthly") {
+        // "Sep"
+        return d.toLocaleDateString(undefined, { month: "short" });
+    }
+    // daily/weekly: "9/06"
+    return `${mm}/${dd.toString().padStart(2, "0")}`;
+}

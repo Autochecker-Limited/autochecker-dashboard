@@ -22,18 +22,30 @@ import {
     tickLabel,
     tooltipValueFormatter,
     type Granularity,
+    tinyTickLabel,
 } from "@/lib/time-series-utils";
 
 // Colors (Tailwind palette)
 const EMERALD = "#10b981"; // M-Pesa
-const CYAN    = "#06b6d4"; // Stripe
-const PURPLE  = "#8b5cf6"; // Ads
-const SLATE   = "#64748b"; // Total (optional dashed)
+const CYAN = "#06b6d4";    // Stripe
+const PURPLE = "#8b5cf6";  // Ads
+const SLATE = "#64748b";   // Total (optional dashed)
 
 type Props = {
     transactions: Tx[];
     campaigns: Campaign[];
 };
+
+type QuickKey = "7d" | "30d" | "90d" | "this-month" | "ytd" | "all";
+
+const QUICK_OPTIONS: ReadonlyArray<{ key: QuickKey; label: string }> = [
+    { key: "7d",         label: "Last 7d" },
+    { key: "30d",        label: "Last 30d" },
+    { key: "90d",        label: "Last 90d" },
+    { key: "this-month", label: "This Month" },
+    { key: "ytd",        label: "YTD" },
+    { key: "all",        label: "All" },
+] as const;
 
 export default function TimeSeriesRevenue({ transactions, campaigns }: Props) {
     // Bounds from data
@@ -61,21 +73,27 @@ export default function TimeSeriesRevenue({ transactions, campaigns }: Props) {
         () => buildDailySeries(transactions, campaigns, start, end, { distributeAds: "even" }),
         [transactions, campaigns, start, end]
     );
-    const data = React.useMemo(
-        () => aggregateSeries(daily, granularity),
-        [daily, granularity]
-    );
+    const data = React.useMemo(() => aggregateSeries(daily, granularity), [daily, granularity]);
 
-    const quick = (label: "7d" | "30d" | "90d" | "all" | "this-month" | "ytd") => {
+    // Keep at most ~8 x-axis labels
+    const ticks = React.useMemo<string[]>(() => {
+        const maxTicks = 8;
+        const step = Math.max(1, Math.ceil(data.length / maxTicks));
+        return data.map((d) => d.date).filter((_, i) => i % step === 0);
+    }, [data]);
+
+    // Typed quick-range setter
+    const quick = (label: QuickKey) => {
         const to = new Date(max);
         let from = new Date(to);
         if (label === "7d") from = new Date(to.getTime() - 6 * 24 * 60 * 60 * 1000);
         else if (label === "30d") from = new Date(to.getTime() - 29 * 24 * 60 * 60 * 1000);
         else if (label === "90d") from = new Date(to.getTime() - 89 * 24 * 60 * 60 * 1000);
-        else if (label === "this-month") { from = new Date(to.getFullYear(), to.getMonth(), 1); }
-        else if (label === "ytd") { from = new Date(to.getFullYear(), 0, 1); }
-        else if (label === "all") { from = new Date(min); }
-        setStart(toIso(from)); setEnd(toIso(to));
+        else if (label === "this-month") from = new Date(to.getFullYear(), to.getMonth(), 1);
+        else if (label === "ytd") from = new Date(to.getFullYear(), 0, 1);
+        else if (label === "all") from = new Date(min);
+        setStart(toIso(from));
+        setEnd(toIso(to));
     };
 
     return (
@@ -84,17 +102,10 @@ export default function TimeSeriesRevenue({ transactions, campaigns }: Props) {
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs text-slate-500 dark:text-slate-400">Quick ranges:</span>
-                    {[
-                        ["7d", "Last 7d"],
-                        ["30d", "Last 30d"],
-                        ["90d", "Last 90d"],
-                        ["this-month", "This Month"],
-                        ["ytd", "YTD"],
-                        ["all", "All"],
-                    ].map(([key, label]) => (
+                    {QUICK_OPTIONS.map(({ key, label }) => (
                         <button
                             key={key}
-                            onClick={() => quick(key as any)}
+                            onClick={() => quick(key)}
                             className="rounded-md border border-slate-200 px-2 py-1 text-xs hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800/60"
                         >
                             {label}
@@ -127,7 +138,9 @@ export default function TimeSeriesRevenue({ transactions, campaigns }: Props) {
                             <button
                                 key={g}
                                 onClick={() => setGranularity(g)}
-                                className={`px-2 py-1 text-xs ${granularity === g ? "bg-slate-100 dark:bg-slate-800" : "hover:bg-slate-50 dark:hover:bg-slate-800/60"}`}
+                                className={`px-2 py-1 text-xs ${
+                                    granularity === g ? "bg-slate-100 dark:bg-slate-800" : "hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                }`}
                             >
                                 {g[0].toUpperCase() + g.slice(1)}
                             </button>
@@ -162,16 +175,18 @@ export default function TimeSeriesRevenue({ transactions, campaigns }: Props) {
                         <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.3} />
                         <XAxis
                             dataKey="date"
-                            tickFormatter={(v: string) => tickLabel(v, granularity)}
+                            ticks={ticks}
+                            interval={0}
+                            minTickGap={12}
+                            tick={{ fontSize: 10 }}
+                            tickFormatter={(v: string) => tinyTickLabel(v, granularity)}
                         />
                         <YAxis />
                         <Tooltip
                             labelFormatter={(label: string) =>
                                 `${granularity === "monthly" ? "Month of" : "Week/Day of"} ${tickLabel(label, granularity)}`
                             }
-                            formatter={(value: ValueType, _name: NameType) =>
-                                tooltipValueFormatter(value)
-                            }
+                            formatter={(value: ValueType, _name: NameType) => tooltipValueFormatter(value)}
                         />
                         <Legend />
 
