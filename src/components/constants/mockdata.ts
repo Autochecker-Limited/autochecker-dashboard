@@ -40,9 +40,8 @@ export const mockCases = [
         ],
         reporter: { name: "Masked for Privacy", phone: "Masked", email: "Masked" },
         crossChecks: [
-            { name: "National Database", match: false },
-            { name: "State Database", match: true },
-            { name: "Local Database", match: false },
+            { name: "Database", match: true },
+            { name: "External Database", match: true },
         ],
     },
     {
@@ -52,12 +51,14 @@ export const mockCases = [
         plate: "M-XY 789",
         status: "Approved",
         assignee: "Ben C.",
-        photos: [],
+        photos: [
+            "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1200&q=80",
+        ],
         reporter: { name: "Masked for Privacy", phone: "Masked", email: "Masked" },
         crossChecks: [
-            { name: "National Database", match: true },
-            { name: "State Database", match: true },
-            { name: "Local Database", match: true },
+            { name: "Database", match: true },
+            { name: "External Database", match: false },
         ],
     },
     {
@@ -70,9 +71,8 @@ export const mockCases = [
         photos: [],
         reporter: { name: "Masked for Privacy", phone: "Masked", email: "Masked" },
         crossChecks: [
-            { name: "National Database", match: false },
-            { name: "State Database", match: false },
-            { name: "Local Database", match: false },
+            { name: "Database", match: false },
+            { name: "External Database", match: false },
         ],
     },
 ];
