@@ -29,17 +29,16 @@ export default function BroadcastLogsSection({
 
     return (
         <div className={frameless ? "" : "rounded-2xl border"}>
-            {/* horizontal scroll + inner padding so right-edge buttons aren't cut */}
             <div className="overflow-x-auto px-2 md:px-3">
-                {/* table-fixed + min width keeps columns from collapsing */}
                 <table className="w-full min-w-[780px] table-fixed">
-                    {/* control column widths */}
                     <colgroup>
-                        <col className="w-[22%]" /> {/* Timestamp */}
-                        <col className="w-[14%]" /> {/* Report */}
-                        <col className="w-[26%]" /> {/* Channel */}
-                        <col className="w-[16%]" /> {/* Status */}
-                        <col className="w-[22%]" /> {/* Actions */}
+                        {[
+                            <col key="ts" style={{ width: "22%" }} />,
+                            <col key="report" style={{ width: "14%" }} />,
+                            <col key="channel" style={{ width: "26%" }} />,
+                            <col key="status" style={{ width: "16%" }} />,
+                            <col key="actions" style={{ width: "22%" }} />,
+                        ]}
                     </colgroup>
 
                     <thead className="border-b">

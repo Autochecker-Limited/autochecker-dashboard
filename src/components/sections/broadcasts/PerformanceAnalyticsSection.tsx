@@ -9,7 +9,7 @@ import {KPI_CARDS, PERFORMANCE_SERIES} from "@/components/constants/broadcastDat
 export const PerformanceAnalyticsSection: React.FC = () => (
     <section className="mb-8">
 
-        <div className="mt-3 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-3 grid gap-4 md:grid-cols-2 lg:grid-cols-2 mx-2">
             {KPI_CARDS.map((kpi) => (
                 <Card key={kpi.key}>
                     <CardContent className="p-4">
